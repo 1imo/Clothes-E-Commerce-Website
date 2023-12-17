@@ -1,0 +1,214 @@
+{% paginate collection.products by 20 %}
+
+
+
+{% comment %} <img class="main-image" src="{{ "collections-placeholder.jpg" | asset_url }}"> {% endcomment %}
+
+<section style="margin: 100px 25px 0px">
+  <h1 class="heading">{{ collection.title }}</h1>
+
+  <select id="sort-by" style="margin: 25px 0px">
+      {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+  
+      {% for option in collection.sort_options %}
+          <option value="{{ option.value }}" {% if option.value == sort_by %}selected="selected"{% endif %}>
+              {{ option.name }}
+          </option>
+      {% endfor %}
+  </select>
+
+  <section class="xs" style="display: flex; flex-direction: row; flex-wrap: wrap; column-gap: 25px; display: none; justify-content: space-around">
+    {% for product in collection.products %}
+        {% render "product-item", product: product, count: 1 %}
+    {% endfor %}
+  </section>
+
+  <section class="s" style="display: flex; flex-direction: row; flex-wrap: wrap; column-gap: 25px; display: none; justify-content: space-around">
+    {% for product in collection.products %}
+        {% render "product-item", product: product, count: 2 %}
+    {% endfor %}
+    {% for product in collection.products %}
+      {% render "product-item", product: product, count: 2 %}
+  {% endfor %}
+  </section>
+
+  <section class="m" style="display: flex; flex-direction: row; flex-wrap: wrap; column-gap: 25px; display: none; justify-content: space-around">
+    {% for product in collection.products %}
+        {% render "product-item", product: product, count: 4 %}
+    {% endfor %}
+    {% for product in collection.products %}
+      {% render "product-item", product: product, count: 4 %}
+  {% endfor %}
+  {% for product in collection.products %}
+    {% render "product-item", product: product, count: 4 %}
+{% endfor %}
+{% for product in collection.products %}
+  {% render "product-item", product: product, count: 4 %}
+{% endfor %}
+  </section>
+
+  <section class="l" style="display: flex; flex-direction: row; flex-wrap: wrap; column-gap: 25px; display: none; justify-content: space-around">
+    {% for product in collection.products %}
+        {% render "product-item", product: product, count: 6 %}
+    {% endfor %}
+    {% for product in collection.products %}
+      {% render "product-item", product: product, count: 6 %}
+  {% endfor %}
+  {% for product in collection.products %}
+    {% render "product-item", product: product, count: 6 %}
+{% endfor %}
+{% for product in collection.products %}
+  {% render "product-item", product: product, count: 6 %}
+{% endfor %}
+{% for product in collection.products %}
+{% render "product-item", product: product, count: 6 %}
+{% endfor %}
+  </section>
+
+  <section class="xl" style="display: flex; flex-direction: row; flex-wrap: wrap; column-gap: 25px; display: none; justify-content: space-around">
+    {% for product in collection.products %}
+        {% render "product-item", product: product, count: 8 %}
+    {% endfor %}
+    {% for product in collection.products %}
+      {% render "product-item", product: product, count: 8 %}
+  {% endfor %}
+  {% for product in collection.products %}
+    {% render "product-item", product: product, count: 8 %}
+{% endfor %}
+{% for product in collection.products %}
+  {% render "product-item", product: product, count: 8 %}
+{% endfor %}
+{% for product in collection.products %}
+{% render "product-item", product: product, count: 8 %}
+{% endfor %}
+  </section>
+
+</section>
+
+
+
+
+
+{{ paginate | default_pagination }}
+{% endpaginate %}
+
+{% section 'footer' %}
+
+
+<style>
+  .main-image {
+    width: calc(100vw -  50px);
+    height: min(66.6vh, calc((100vw - 50px) * 1.618));
+    object-fit: cover;
+    margin: 100px 25px 50px !important
+  }
+
+  
+
+  .heading {
+    margin: 0 auto;
+    font-size: 20px;
+    text-align: center;
+    font-weight: 400 !important
+  }
+
+  #sort-by {
+    {% comment %} height: 37.5px; {% endcomment %}
+    box-sizing: border-box;
+    padding: 0 25px;
+    margin-top: 50px !important;
+    box-sizing: border-box;
+    background: none;
+    color: #fff;
+    border: none;
+  }
+
+  #sort-by:focus {
+    outline: none;
+  }
+
+  #sort-by option {
+    background: #0c0c0c
+  }
+
+  @media only screen and (max-width: 900px) {
+    #sort-by {
+      padding: 0;
+    }
+  }
+
+
+  @media only screen and (max-width: 400px) {
+    .xs {
+        display: flex !important;
+        justify-content: space-between !important 
+    }
+
+    .item-crd {
+        width: calc(100vw - 50px) !important
+    }
+}
+
+@media only screen and (max-width: 600px) and (min-width: 400px) {
+    .s {
+        display: flex !important
+    }
+
+    .item-crd {
+      width: calc((100vw - 75px) / 2) !important;
+  }
+}
+
+@media only screen and (max-width: 1000px) and (min-width: 600px) {
+    .m {
+        display: flex !important
+    }
+}
+
+@media only screen and (max-width: 1800px) and (min-width: 1000px) {
+    .l {
+        display: flex !important
+    }
+}
+
+@media only screen and (min-width: 1800px) and (min-width: 1800px) {
+    .xl {
+        display: flex !important
+    }
+}
+
+.xs,
+.s,
+.m,
+.l,
+.xl {
+  row-gap: 25px
+}
+
+
+</style>
+
+<script>
+    Shopify.queryParams = {};
+  
+    // Preserve existing query parameters
+    if (location.search.length) {
+      var params = location.search.substr(1).split('&');
+  
+      for (var i = 0; i < params.length; i++) {
+        var keyValue = params[i].split('=');
+  
+        if (keyValue.length) {
+          Shopify.queryParams[decodeURIComponent(keyValue[0])] = decodeURIComponent(keyValue[1]);
+        }
+      }
+    }
+  
+    // Update sort_by query parameter on select change
+    document.querySelector('#sort-by').addEventListener('change', function(e) {
+      var value = e.target.value;
+  
+      Shopify.queryParams.sort_by = value;
+      location.search = new URLSearchParams(Shopify.queryParams).toString();
+    });
+  </script>

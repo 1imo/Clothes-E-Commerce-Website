@@ -1,0 +1,164 @@
+{% paginate search.results by 4 %}
+
+<section>
+
+{% if search.performed %}
+    
+
+    {% for result in search.results %}
+
+        {% if result.object_type == "page" %}
+            <a href="{{ result.url }}">{{ result.title }}</a>
+        {% elsif result.object_type == "article" %}
+            <a href="{{ result.url }}">{{ result.title }}</a>
+        {% else %}
+        <section style="margin: 100px 50px">
+          
+          
+            <section class="xs" style="display: flex; flex-direction: row; flex-wrap: wrap; column-gap: 25px; display: none; justify-content: space-around">
+              
+                  {% render "product-item", product: result, count: 1 %}
+              
+            </section>
+          
+            <section class="s" style="display: flex; flex-direction: row; flex-wrap: wrap; column-gap: 25px; display: none; justify-content: space-around">
+              
+                  {% render "product-item", product: result, count: 2 %}
+              
+                
+           
+            </section>
+          
+            <section class="m" style="display: flex; flex-direction: row; flex-wrap: wrap; column-gap: 25px; display: none; justify-content: space-around">
+              
+                  {% render "product-item", product: result, count: 4 %}
+              
+                
+          
+            </section>
+          
+            <section class="l" style="display: flex; flex-direction: row; flex-wrap: wrap; column-gap: 25px; display: none; justify-content: space-around">
+              
+                  {% render "product-item", product: result, count: 6 %}
+              
+                
+         
+            </section>
+          
+            <section class="xl" style="display: flex; flex-direction: row; flex-wrap: wrap; column-gap: 25px; display: none; justify-content: space-around">
+              
+                  {% render "product-item", product: result, count: 8 %}
+              
+                
+          
+            </section>
+          
+          </section>
+        {% endif %}
+    {% endfor %}
+{% else %}
+    <h1>Try searching for something</h1>
+{% endif %}
+
+{% section 'footer' %}
+
+</section>
+
+{{ paginate | default_pagination }}
+{% endpaginate %}
+
+<style>
+    .main-image {
+      width: calc(100vw -  50px);
+      height: min(66.6vh, calc((100vw - 50px) * 1.618));
+      object-fit: cover;
+      margin: 100px 25px 50px !important
+    }
+  
+    .heading {
+      margin: 0 auto;
+      font-size: 20px;
+      text-align: center
+    }
+  
+    .sort-by {
+      height: 37.5px;
+      box-sizing: border-box;
+      width: min(100px, calc(100vw - 50px));
+    }
+  
+  
+    @media only screen and (max-width: 400px) {
+      .xs {
+          display: flex !important;
+          justify-content: space-between !important 
+      }
+  
+      .item-crd {
+          width: calc(100vw - 50px) !important
+      }
+  }
+  
+  @media only screen and (max-width: 600px) and (min-width: 400px) {
+      .s {
+          display: flex !important
+      }
+  
+      .item-crd {
+        width: calc((100vw - 75px) / 2) !important;
+    }
+  }
+  
+  @media only screen and (max-width: 1000px) and (min-width: 600px) {
+      .m {
+          display: flex !important
+      }
+  }
+  
+  @media only screen and (max-width: 1800px) and (min-width: 1000px) {
+      .l {
+          display: flex !important
+      }
+  }
+  
+  @media only screen and (min-width: 1800px) and (min-width: 1800px) {
+      .xl {
+          display: flex !important
+      }
+  }
+  
+  .xs,
+  .s,
+  .m,
+  .l,
+  .xl {
+    row-gap: 25px
+  }
+  
+  
+  </style>
+  
+  <script>
+      Shopify.queryParams = {};
+    
+      // Preserve existing query parameters
+      if (location.search.length) {
+        var params = location.search.substr(1).split('&');
+    
+        for (var i = 0; i < params.length; i++) {
+          var keyValue = params[i].split('=');
+    
+          if (keyValue.length) {
+            Shopify.queryParams[decodeURIComponent(keyValue[0])] = decodeURIComponent(keyValue[1]);
+          }
+        }
+      }
+    
+      // Update sort_by query parameter on select change
+      document.querySelector('#sort-by').addEventListener('change', function(e) {
+        var value = e.target.value;
+    
+        Shopify.queryParams.sort_by = value;
+        location.search = new URLSearchParams(Shopify.queryParams).toString();
+      });
+    </script>

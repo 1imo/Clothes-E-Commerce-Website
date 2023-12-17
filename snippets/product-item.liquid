@@ -1,0 +1,69 @@
+
+{%- assign title_words = product.title | split: '-' -%}
+                    
+    
+<div class="item-crd">
+    <a href="{{ product.url }}" style="height: 100%; display: flex; flex-direction: column; justify-content: space-between">
+    <img class="product-image" src="{{ product.featured_image | image_url }}">
+    <div style="display: flex; flex-direction: row; justify-content: center; align-items: flex-start">
+        <div class="info">
+            {% for value in title_words %}
+                {% if forloop.index == 1 %}
+                    <h2>{{ value | upcase }}</h2>
+                  {% endif %}
+                {% if forloop.index == 2 %}
+                  <h3>{{ value | upcase}}</h3>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% comment %} <img src="{{ "heart-black-outline.svg" | asset_url }}" style="height: 20px; width: 20px"> {% endcomment %}
+    </div>
+    
+    </a>
+</div>
+
+<style>
+    .item-crd,
+    .product-image {
+        width: calc((100vw - (({{ count }} - 1) * 25px)) / {{ count }});
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-width: min(calc(100vw - 50px), 250px);
+        max-width: 500px;
+        background: #0c0c0c !important;
+        color: #fff !important
+        
+        {% comment %} border: 1px solid black {% endcomment %}
+        {% comment %} max-width: 250px; {% endcomment %}
+    }
+
+    .product-image {
+        align-self: center !important;
+        margin: 0 auto;
+    }
+
+    .item-crd {
+        max-height: 353.75px;
+        height: min(calc((100vw - 50px) * 1.618), 353.75px)
+    }
+
+
+    .info h2 {
+        font-size: 15px;
+        font-family: 'Hedvig Letters Serif', serif;
+        margin: 0 0 5px;
+        padding: 0;
+        text-align: center
+    }
+
+    .info h3 {
+        font-size: 15px;
+        font-weight: 300;
+        font-family: 'Lato', sans-serif;
+        margin: 0;
+        padding: 0;
+        text-align: center
+    }
+
+</style>

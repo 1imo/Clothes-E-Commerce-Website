@@ -1,0 +1,355 @@
+
+<section class="content">
+{% form "cart", cart %}
+
+    <div class="heading"><h1>01. SHOPPING BAG</h1><h2>02. ORDER</h2></div>
+
+    {% if cart.empty? %}
+        <p>Your cart is empty</p>
+    {% else %}
+        {% for item in cart.items %}
+            <div class="item">
+                <img src="{{ item.image | image_url }}">
+                <div class="display">
+                    {% comment %} <h2>{{ item.title }}</h2> {% endcomment %}
+                    {%- assign title_words = item.title | split: "-" -%}
+                    {% for value in title_words %}
+                        {% if forloop.index == 1 %}
+                            <h2>{{ value | upcase }}</h2>
+                          {% endif %}
+                        {% if forloop.index == 2 %}
+                          <h3>{{ value | upcase}}</h3>
+                          <p>GBP {{ item.price | | money_without_currency}}</p>
+                        {% endif %}
+                        
+
+                        {% if forloop.index == 3 %}
+                            {%- assign options = value | split: "/" -%}
+                            <div class="info">
+                            {% for value in options %}
+                                {% if forloop.index == 1 %}
+                                    <h4>Size:  {{ value | upcase }}</h2>
+                                  {% endif %}
+                                {% if forloop.index == 2 %}
+                                  <h4>Colour:  {{ value }}</h3>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    {% comment %} <input name="updates[]" value="{{ item.quantity }}" /> {% endcomment %}
+                    <a class="removeProduct" style="display: none" href="{{ item.url_to_remove }}">Remove</a>
+                    <section class="switcher">
+                        <img src="{{ "minus-black.svg" | asset_url }}" alt="Remove 1" class="remove">
+                        <div class="quantity">Qty: <input name="updates[]" value="{{ item.quantity }}" class="input"/></div>
+                        <img src="{{ "plus-black.svg" | asset_url }}" alt="Add 1" class="add">
+                    </section>
+                </div>
+            </div>
+        {% endfor %}
+
+        <section class="desktop-sticky" style="display:none">
+            <div>&nbsp;</div>
+            <p>GBP {{ cart.total_price | money_without_currency }}</p>
+
+            <button style="display: none" type="submit" name="update" class="update">Update Cart</button>
+
+            <button class="bin" type="submit" name="checkout">Checkout <img src="{{ "bin-black.svg" | asset_url }}" /></button>
+        </section>
+
+        <section class="mobile" style="display:none">
+            <div>&nbsp;</div>
+            <p>GBP {{ cart.total_price | money_without_currency }}</p>
+
+            <button style="display: none" type="submit" name="update" class="update">Update Cart</button>
+
+            <button class="bin" type="submit" name="checkout">Checkout <img src="{{ "bin-black.svg" | asset_url }}" /></button>
+        </section>
+
+
+        
+
+    {% endif %}
+{% endform %}
+
+
+</section>
+{% section 'footer' %}
+
+<script>
+    const add = document.querySelector(".add")
+    const remove = document.querySelector(".remove")
+    const input = document.querySelector(".input")
+    const update = document.querySelector(".update")
+    const removeProduct = document.querySelector(".removeProduct")
+
+    add.addEventListener("click", () => {
+        input.value++
+        update.click()
+    })
+
+    remove.addEventListener("click", () => {
+        if(input.value - 1 == 0) {
+            removeProduct.click()
+        } else {
+            input.value--
+        }
+        update.click()
+    })
+</script>
+
+<style>
+    .content {
+        margin-top: 75px;
+        box-sizing: border-box;
+        padding: 50px
+    }
+
+    .heading {
+        display: flex;
+        flex-direction: row;
+        column-gap: 25px;
+        font-size: 15px;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .heading h1 {
+        font-weight: 500;
+        font-family: 'Lato', sans-serif !important;
+        font-size: 15px !important;
+        margin-top: 0px !important
+    }
+
+    .heading h2 {
+        font-weight: 300;
+        font-family: 'Lato', sans-serif !important;
+        font-size: 15px !important
+    }
+
+    .item {
+        display: flex;
+        flex-direction: row;
+        column-gap: 25px;
+        margin: 50px 0px
+    }
+
+    .item div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .item div h2 {
+        font-weight: 500;
+        font-family: 'Hedvig Letters Serif', serif !important;
+        font-size: 12.5px !important;
+        margin-bottom: 5px
+    }
+
+    .item div h3 {
+        font-weight: 400;
+        font-family: 'Lato', sans-serif !important;
+        font-size: 15px !important;
+        margin-bottom: 25px
+    }
+
+    .item div p {
+        font-size: 12.5px;
+        font-weight: 400;
+        margin-bottom: 25px
+    }
+
+    .item div div {
+        display: flex;
+        flex-direction: row;
+        column-gap: 25px
+    }
+
+    .info {
+        margin-top: 25px;
+        width: 100% !important;
+        display: flex !important;
+        justify-content: flex-start !important;
+        column-gap: 25px !important;
+    }
+
+    .item div div h4 {
+        font-size: 12.5px;
+        {% comment %} white-space: nowrap !important; {% endcomment %}
+        {% comment %} width: 50% !important; {% endcomment %}
+    }
+
+    .switcher {
+        display: flex;
+        flex-direction: row;
+        column-gap: 25px;
+        align-items: center;
+        margin-top: 25px;
+    }
+
+    .switcher img {
+        height: 20px;
+        width: 20px !important
+    }
+
+    .switcher div {
+        font-size: 12.5px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        column-gap: 5px !important
+    }
+
+    .switcher input {
+        border: none;
+        outline: none;
+        background: none;
+        height: 20px;
+        width: 20px;
+        font-size: 12.5px;
+        color: #fff
+    }
+
+    .bin {
+        height: 50px;
+        width: 100%;
+        border: 1px solid #0c0c0c;
+        background: #181818;
+        font-size: 12.5px;
+        margin-top: 25px;;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        column-gap: 10px;
+        {% comment %} padding: 0 !important; {% endcomment %}
+        font-size: 15px;
+        font-family: 'Lato', sans-serif;
+        font-weight: 500;
+        color: #fff !important
+    }
+
+    .desktop-sticky div,
+    .mobile div {
+        height: 2px;
+        background-color: #E1FF00;
+    }
+
+    .desktop-sticky p,
+    .mobile p {
+        font-size: 15px;
+        margin-top: 25px;
+        text-align: right;
+    }
+
+
+    @media only screen and (min-width: 900px) {
+        .desktop-sticky {
+            display: block !important;
+            position: fixed;
+            top: 50px;
+            left: calc(100% / 6 * 4 );
+            {% comment %} transform: translateX(-100%); {% endcomment %}
+            width: 16.67vw;
+            box-sizing: border-box;
+            padding: 100px 25px 250px
+        }
+
+        .heading {
+            margin-bottom: 50px
+        }
+
+        .content {
+            padding: 100px 16.67vw 250px
+        }
+
+        .item {
+            width: calc(100vw / 6 * 3);
+            margin-top: 25px
+        }
+
+        .item img {
+            width: 16.67vw;
+            object-fit: contain !important;
+        }
+
+        .display {
+            width: 100% !important;
+        }
+
+        .content {
+            margin-top: 50px
+        }
+
+        
+    }
+
+    @media only screen and (max-width: 900px) {
+        .mobile {
+            display: flex !important;
+            flex-direction: column;
+        }
+
+        .item {
+            width: 100%;
+            column-gap: 10px
+        }
+
+        .item img,
+        .display {
+            width: 50% !important;
+            object-fit: contain !important;
+            padding: 0;
+            margin: 0
+        }
+
+        .switcher {
+            display: flex;
+            flex-direction: row;
+            column-gap: 25px;
+            align-items: center;
+            margin-top: 25px;
+        }
+    
+        .switcher img {
+            height: 20px;
+            width: 20px !important
+        }
+    
+        .switcher div {
+            font-size: 12.5px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            column-gap: 5px !important
+        }
+    
+        .switcher input {
+            border: none;
+            outline: none;
+            background: none;
+            height: 20px;
+            width: 20px;
+            font-size: 12.5px
+        }
+    }
+
+    @media only screen and (max-width: 500px) {
+        .info {
+            flex-direction: column !important;
+            row-gap: 10px;
+            width: 100% !important
+        }
+
+        .info h4 {
+            width: 100% !important;
+            margin-top: 0;
+        }
+
+        
+    }
+
+    .quantity input {
+        margin: 0 !important
+    }
+
+</style>

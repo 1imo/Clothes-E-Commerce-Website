@@ -1,0 +1,507 @@
+
+
+
+
+
+<section class="desktop hidden">
+    {%- assign title_words = product.title | split: '-' -%}
+    <div class="headsup">
+        <div>
+            {% for value in title_words %}
+                {% if forloop.index == 1 %}
+                    <h1>{{ value | upcase }}</h1>
+                  {% endif %}
+                {% if forloop.index == 2 %}
+                  <h2>{{ value | upcase}}</h2>
+                {% endif %}
+              {% endfor %}
+            <p>GBP {{ product.price | money_without_currency }}</p>
+            
+        </div>
+        {% comment %} <img style="height: 20px; width: 20px" src="{{ "heart-black-outline.svg" | asset_url }}"> {% endcomment %}
+    </div>
+    {{ 'option_selection.js' | shopify_asset_url | script_tag }}
+    {% form 'product', product %}
+        <label>Options</label>
+        <select name="id">
+            {% for variant in product.variants %}
+                <option value={{ variant.id }}>
+                    {{ variant.title }}
+                </option>
+            {% endfor %}
+        </select>
+        <div>
+            <button type="submit" class="BIN">Buy It Now</button>
+            <button type="submit"><img src="{{ "bag-black-outline.svg" | asset_url }}"></button>
+        </div>
+    {% endform %}
+    
+    <div class="sub subOne"><h4>Description</h4><img class="temp" src="{{ "chevron-white-closed.svg" | asset_url }}" style="width:20px;height:20px;"></div>  
+        <div class="hidden info subOneinfo ">{{ product.description }}</div>
+    {% comment %} <div class="sub sub2"><h4>Specifications</h4><img src="{{ "chevron-black-closed.svg" | asset_url }}" style="width:20px;height:20px;"></div> {% endcomment %}
+    <div class="sub sub2"><h4>Delivery</h4><img src="{{ "chevron-white-closed.svg" | asset_url }}" style="width:20px;height:20px;"></div>
+        <div class="hidden info sub2info ">
+            <p>Our commitment to providing you with the fastest and most reliable delivery service is paramount. We understand the importance of getting your packages to you as quickly as possible, and we put in the extra effort to ensure that your orders are shipped out daily and delivered within 1-3 days for UK residents.
+            <br>
+            <br>
+            Our streamlined shipping process and strategic partnerships with leading couriers allow us to move your parcels efficiently throughout the UK. Once your order is processed, it is promptly dispatched to our fulfillment center, where it is carefully packaged and prepared for shipment. From there, your parcel embarks on a journey that is meticulously tracked every step of the way, keeping you informed of its progress and estimated delivery date.
+            <br>
+            <br>
+            Our dedication to providing timely and trackable deliveries is reflected in our consistently positive customer feedback. We strive to exceed your expectations and make your online shopping experience as hassle-free and convenient as possible. With our efficient shipping procedures and commitment to customer satisfaction, we guarantee that your packages will reach you within the promised timeframe, ensuring that you receive your purchases promptly and without any inconveniences.</p>
+        </div>
+    <div class="sub sub3"><h4>Returns</h4><img src="{{ "chevron-white-closed.svg" | asset_url }}" style="width:20px;height:20px;"></div>
+        <div class="hidden info sub3info ">
+            <p>
+                We are committed to providing a seamless and hassle-free shopping experience, and that includes offering a flexible and convenient returns policy. For UK residents, we offer a generous 30-day return window, allowing you to easily exchange or return any items that may not meet your expectations.
+                <br>
+                <br>
+                Whether you've changed your mind about an item, found a better one, or simply aren't satisfied with the fit or quality, we're here to make the return process as simple as possible. Simply contact us within the 30-day window and we'll provide you with a straightforward return label and instructions.
+                <br>
+                <br>
+                Once your returned item arrives, we'll inspect it to ensure it meets our return policy guidelines. If the item is in good condition, we'll promptly process your exchange or refund. We'll also cover the shipping costs for your return, so there's no additional expense on your end.
+                <br>
+                <br>
+                Our commitment to providing a hassle-free return policy is just one way we go the extra mile to ensure your complete satisfaction. We value your business and want you to feel confident that we're here to support you throughout your shopping experience, from the moment you place your order until you're happily enjoying your purchases.
+            </p>
+        </div>
+    <div class="sub sub4"><h4>Reviews</h4><img src="{{ "chevron-white-closed.svg" | asset_url }}" style="width:20px;height:20px;"></div>
+</section>
+
+    {% comment %} {%- assign root =  'https://e17d-82-132-244-243.ngrok-free.app/' -%}
+
+    {%- assign trunk = product.title -%}
+
+    {%- assign url = root | append: trunk %}
+
+    <img class="first-image desktop-image" src="{{ url  | append: ' - 1'}}" alt="{{ image.alt }}" class="product-image">
+    <img class="desktop-image" src="{{ url  | append: ' - 2'}}" alt="{{ image.alt }}" class="product-image">
+    <img class="desktop-image" src="{{ url  | append: ' - 3'}}" alt="{{ image.alt }}" class="product-image"> {% endcomment %}
+    
+{% for image in product.images %}
+    {% if forloop.index == 1 %}
+        <img class="first-image desktop-image hidden" src="{{ image | image_url }}">
+    {% else %}
+        <img class="desktop-image hidden" src="{{ image | image_url }}">
+      {% endif %}
+{% endfor %}
+    
+    {% comment %} {% for image in product.images %}
+    {% endfor %} {% endcomment %}
+
+    
+<section class="imagereel hidden">
+    {% for image in product.images %}
+        {% if forloop.index == 1 %}
+            <img class="first-image" src="{{ image | image_url }}">
+        {% else %}
+            <img src="{{ image | image_url }}">
+          {% endif %}
+    {% endfor %}
+</section>
+        
+<section class="mobile--info hidden">
+    {%- assign title_words = product.title | split: '-' -%}
+    <div class="headsup">
+        <div>
+            {% for value in title_words %}
+                {% if forloop.index == 1 %}
+                    <h1>{{ value | upcase }}</h1>
+                  {% endif %}
+                {% if forloop.index == 2 %}
+                  <h2>{{ value | upcase}}</h2>
+                {% endif %}
+              {% endfor %}
+            <p>GBP {{ product.price | money_without_currency }}</p>
+            
+        </div>
+        {% comment %} <img style="height: 20px; width: 20px" src="{{ "heart-black-outline.svg" | asset_url }}"> {% endcomment %}
+    </div>
+    {{ 'option_selection.js' | shopify_asset_url | script_tag }}
+    {% form 'product', product %}
+        <label>Options</label>
+        <select name="id">
+            {% for variant in product.variants %}
+                <option value={{ variant.id }}>
+                    {{ variant.title }}
+                </option>
+            {% endfor %}
+        </select>
+        <div>
+            <button type="submit" class="BIN">Buy It Now</button>
+            <button type="submit"><img src="{{ "bag-black-outline.svg" | asset_url }}"></button>
+        </div>
+    {% endform %}
+    
+    <div class="sub subOne"><h4>Description</h4><img src="{{ "chevron-white-closed.svg" | asset_url }}" style="width:20px;height:20px;"></div>  
+        <div class="info subOneinfo ">{{ product.description }}</div>
+    {% comment %} <div class="sub sub2"><h4>Specifications</h4><img src="{{ "chevron-black-closed.svg" | asset_url }}" style="width:20px;height:20px;"></div> {% endcomment %}
+    <div class="sub sub2"><h4>Delivery</h4><img src="{{ "chevron-white-closed.svg" | asset_url }}" style="width:20px;height:20px;"></div>
+        <div class="info sub2info ">
+            <p>Our commitment to providing you with the fastest and most reliable delivery service is paramount. We understand the importance of getting your packages to you as quickly as possible, and we put in the extra effort to ensure that your orders are shipped out daily and delivered within 1-3 days for UK residents.
+            <br>
+            <br>
+            Our streamlined shipping process and strategic partnerships with leading couriers allow us to move your parcels efficiently throughout the UK. Once your order is processed, it is promptly dispatched to our fulfillment center, where it is carefully packaged and prepared for shipment. From there, your parcel embarks on a journey that is meticulously tracked every step of the way, keeping you informed of its progress and estimated delivery date.
+            <br>
+            <br>
+            Our dedication to providing timely and trackable deliveries is reflected in our consistently positive customer feedback. We strive to exceed your expectations and make your online shopping experience as hassle-free and convenient as possible. With our efficient shipping procedures and commitment to customer satisfaction, we guarantee that your packages will reach you within the promised timeframe, ensuring that you receive your purchases promptly and without any inconveniences.</p>
+        </div>
+    <div class="sub sub3"><h4>Returns</h4><img src="{{ "chevron-white-closed.svg" | asset_url }}" style="width:20px;height:20px;"></div>
+        <div class="info sub3info ">
+            <p>
+                We are committed to providing a seamless and hassle-free shopping experience, and that includes offering a flexible and convenient returns policy. For UK residents, we offer a generous 30-day return window, allowing you to easily exchange or return any items that may not meet your expectations.
+                <br>
+                <br>
+                Whether you've changed your mind about an item, found a better one, or simply aren't satisfied with the fit or quality, we're here to make the return process as simple as possible. Simply contact us within the 30-day window and we'll provide you with a straightforward return label and instructions.
+                <br>
+                <br>
+                Once your returned item arrives, we'll inspect it to ensure it meets our return policy guidelines. If the item is in good condition, we'll promptly process your exchange or refund. We'll also cover the shipping costs for your return, so there's no additional expense on your end.
+                <br>
+                <br>
+                Our commitment to providing a hassle-free return policy is just one way we go the extra mile to ensure your complete satisfaction. We value your business and want you to feel confident that we're here to support you throughout your shopping experience, from the moment you place your order until you're happily enjoying your purchases.
+            </p>
+        </div>
+    <div class="sub sub4"><h4>Reviews</h4><img src="{{ "chevron-white-closed.svg" | asset_url }}" style="width:20px;height:20px;"></div>
+    </section>           
+    
+{% section 'footer' %}
+
+<script>
+    const subOne = document.querySelector('.subOne');
+    const subOneinfo = document.querySelector('.subOneinfo');
+    const sub2 = document.querySelector('.sub2');
+    const sub2info = document.querySelector('.sub2info');
+    const sub3 = document.querySelector('.sub3');
+    const sub3info = document.querySelector('.sub3info');
+    const sub4 = document.querySelector('.sub4');
+    const sub4info = document.querySelector('.sub4info');
+
+    const temp = document.querySelector(".temp")
+
+    temp.addEventListener("touchstart", () => subOneinfo.classList.remove("hidden"))
+
+    let open = false
+
+    console.log("HI")
+
+    function handleInteraction(evt) {
+        evt.preventDefault()
+        if(!open) {
+            open = subOneinfo
+            subOneinfo.classList.remove("hidden")
+        } else if (open == subOneinfo) {
+            open.classList.add("hidden")
+            open = false
+            {% comment %} sub1info.classList.remove("hidden") {% endcomment %}
+        } else {
+            open.classList.add("hidden")
+            open = subOneinfo
+            subOneinfo.classList.remove("hidden")
+        }
+    }
+
+    subOne.addEventListener('touchmove', handleInteraction)
+    subOne.addEventListener('click', handleInteraction)
+
+
+    
+
+    
+
+    sub2.addEventListener('click', () => {
+        console.log("CLICK")
+        console.log(sub2info)
+        if(!open) {
+            open = sub2info
+            sub2info.classList.remove("hidden")
+        } else if (open == sub2info) {
+            open.classList.add("hidden")
+            open = false
+            {% comment %} sub1info.classList.remove("hidden") {% endcomment %}
+        } else {
+            open.classList.add("hidden")
+            open = sub2info
+            sub2info.classList.remove("hidden")
+        }
+    })
+
+    sub3.addEventListener('click', () => {
+        console.log("CLICK")
+        console.log(sub3info)
+        if(!open) {
+            open = sub3info
+            sub3info.classList.remove("hidden")
+        } else if (open == sub3info) {
+            open.classList.add("hidden")
+            open = false
+            {% comment %} sub1info.classList.remove("hidden") {% endcomment %}
+        } else {
+            open.classList.add("hidden")
+            open = sub3info
+            sub3info.classList.remove("hidden")
+        }
+    })
+
+    sub4.addEventListener('click', () => {
+        console.log("CLICK")
+        console.log(sub4info)
+        if(!open) {
+            open = sub4info
+            sub4info.classList.remove("hidden")
+        } else if (open == sub4info) {
+            open.classList.add("hidden")
+            open = false
+            {% comment %} sub1info.classList.remove("hidden") {% endcomment %}
+        } else {
+            open.classList.add("hidden")
+            open = sub1info
+            sub4info.classList.remove("hidden")
+        }
+    })
+
+    {% comment %} console.log({{ product.variants }}) {% endcomment %}
+</script>
+
+<style>
+    .product-image {
+        height:200px;
+        width: 200px;
+    }
+
+    
+
+    .desktop {
+        position: fixed;
+        top: 100px;
+        left: 100%;
+        transform: translateX(-100%);
+        width: 33.3vw;
+        color: #0c0c0c;
+        box-sizing: border-box;
+        padding: 50px;
+        height: calc(100vh - 100px);
+        overflow-y: scroll;
+        color: #fff !important
+    }
+
+    .headsup {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        color: #fff !important
+
+    }
+
+    .headsup img {
+        height: 25px;
+        width: 25px
+    }
+
+    .headsup div {
+        display: flex;
+        flex-direction: column;
+        row-gap: 5px;
+        color: #fff !important
+
+    }
+
+    .headsup div h1 {
+        font-size: 15px;
+        margin-top: 0 !important;
+        color: #fff !important
+
+    }
+
+    .headsup div h2 {
+        font-size: 20px;
+        font-weight: 300;
+        color: #fff !important
+
+    }
+
+    .headsup div p {
+        font-size: 15px;
+        font-weight: 300;
+        margin: 25px 0;
+        color: #fff !important
+
+    }
+
+    .page > img {
+        width: 33.3vw;
+        margin-left: 33.3vw;
+        height: auto;
+        display: block;
+        transform: translate(-50%, -50%);
+        margin-bottom: 100px
+    }
+
+    .first-image {
+        margin-top: 50vh;
+    }
+
+    form label {
+        display: block;
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: 10px;
+        margin-top: 75px;
+        color: #fff !important
+        
+    }
+
+    form select,
+    form option {
+        width: 100%;
+        height: 50px;
+        background: #181818;
+        outline: #181818;
+        
+        border: 1px solid #0c0c0c;
+        box-sizing: border-box;
+        padding: auto 25px;
+        color: #0c0c0c;
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: 25px;
+        color: #8B8B8B
+
+    }
+
+    form option {
+        color: #fff
+    }
+
+
+    form div {
+        display: flex;
+        flex-direction: row;
+        column-gap: 10px;
+        width: 100%
+    }
+
+    form div button {
+        height: 50px;
+        box-sizing: border-box;
+        flex: 1;
+        border: 1px solid #0c0c0c;
+        background: #E1FF00;
+        font-size: 15px;
+        font-weight: 400
+    }
+
+    .bin {
+        flex: 2 !important;
+        background: #181818 !important;
+        color: #fff !important;
+        margin-bottom: 50px !important
+    }
+    
+    .sub {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 25px
+    }
+
+    .sub:hover {
+        cursor: pointer
+    }
+
+    .sub h4 {
+        font-weight: 500;
+        font-size: 15px
+    }
+
+    .info {
+        margin-bottom: 50px
+    }
+
+    
+
+    .info {
+        line-height: 150% !important
+    }
+
+    .page {
+        height: 100%;
+        width: min(100%, 100vw);
+        overflow-x: hidden
+    }
+
+    .hidden {
+        display: none !important
+    }
+
+    @media only screen and (min-width: 900px) {
+        .desktop,
+        .desktop-image {
+            display: block !important
+        }
+
+        .desktop-image {
+            width: calc(66.6vw - 50px)
+        }
+    }
+
+    @media only screen and (max-width: 900px) {
+        .desktop,
+        .desktop-image {
+            display: none !important
+        }
+
+        
+        .imagereel {
+            height: 33.3vh !important;
+            width: 100vw !important;
+            overflow-x: scroll;
+            overflow-Y: hidden;
+            display: flex !important;
+            flex-direction: row;
+            column-gap: 100px;
+            box-sizing: border-box;
+            padding: 0 25vw 0 50vw !important;
+            margin-top: 75px;
+        }
+
+        .imagereel img {
+            height: 33.3vh;
+            width: auto;
+            transform: translateX(-50%)
+        }
+
+        .first-image {
+            margin-top: 0;
+            
+        }
+
+        
+
+        .mobile--info {
+            box-sizing: border-box;
+            padding: 50px 25px 100px;
+            display: block !important;
+        }
+
+        form label {
+            margin-top: 25px
+        }
+
+        
+
+        
+
+
+    }
+
+    .mobile--info {
+        width: 100vw;
+        height: 100% !important;
+        height: fit-content !important ;
+    }
+
+</style>
+
+
+
